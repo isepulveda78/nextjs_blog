@@ -33,6 +33,7 @@ export default function Search() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder='Search Posts...'
+              autoComplete='off'
             />
 
             <FaSearch className='absolute top-0 right-0 text-black mt-3 mr-4' />
