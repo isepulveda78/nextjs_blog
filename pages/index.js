@@ -1,10 +1,8 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import Layout from '../components/Layout'
+import Layout from '@/components/Layout'
 import Link from 'next/link'
-import Post from '../components/Post'
-import {sortBydate} from '../utils'
+import Post from '@/components/Post'
+import { getPosts } from 'libs/post'
+
 export default function HomePage({posts}) {
   return (
     <Layout>
@@ -26,21 +24,9 @@ export default function HomePage({posts}) {
 
 export async function getStaticProps(){
   //readdirSync reads a file 
-  const files = fs.readdirSync(path.join('posts'))
-
-  const posts = files.map((filename) => {
-    const slug = filename.replace('.md', '') 
-    const markdownWithMeta = fs.readFileSync(path.join('posts', filename), 'utf-8')
-
-    const {data: frontmatter} = matter(markdownWithMeta)
-    return {
-      slug,
-      frontmatter
-    }
-  })
   return {
     props: {
-      posts: posts.sort(sortBydate).slice(0, 6),
+      posts: getPosts().slice(0, 6),
     }
   }
 }
